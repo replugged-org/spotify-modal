@@ -5,21 +5,21 @@ const SpotifyAPI = require('../SpotifyAPI');
 module.exports = {
   fetchDevices: async () => {
     const { devices } = await SpotifyAPI.getDevices();
-    FluxDispatcher.dirtyDispatch({
+    FluxDispatcher.dispatch({
       type: FluxActions.DEVICES_FETCHED,
       devices
     });
   },
 
   updateCurrentTrack: (newTrack) => {
-    FluxDispatcher.dirtyDispatch({
+    FluxDispatcher.dispatch({
       type: FluxActions.CURRENT_TRACK_UPDATED,
       track: newTrack
     });
   },
 
   updatePlayerState: (newState) => {
-    FluxDispatcher.dirtyDispatch({
+    FluxDispatcher.dispatch({
       type: FluxActions.PLAYER_STATE_UPDATED,
       state: {
         ...newState,
@@ -29,7 +29,7 @@ module.exports = {
   },
 
   updateCurrentLibraryState: (newState) => {
-    FluxDispatcher.dirtyDispatch({
+    FluxDispatcher.dispatch({
       type: FluxActions.LIBRARY_STATE_UPDATED,
       state: newState
     });
