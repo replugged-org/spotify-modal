@@ -64,6 +64,10 @@ class Modal extends React.PureComponent {
   }
 
   renderFromBase (isPremium) {
+    if (!this.props.base) {
+      return;
+    }
+
     const { avatar, avatarWrapper } = getModule([ 'container', 'usernameContainer' ], false);
 
     return {
