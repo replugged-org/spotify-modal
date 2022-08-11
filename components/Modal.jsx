@@ -26,7 +26,7 @@ class Modal extends React.PureComponent {
   }
 
   render () {
-    if (this.props.devices.length === 0 || !this.props.currentTrack) {
+    if (!this.props.base || this.props.devices.length === 0 || !this.props.currentTrack) {
       return null;
     }
 
@@ -64,10 +64,6 @@ class Modal extends React.PureComponent {
   }
 
   renderFromBase (isPremium) {
-    if (!this.props.base) {
-      return;
-    }
-
     const { avatar, avatarWrapper } = getModule([ 'container', 'usernameContainer' ], false);
 
     return {
