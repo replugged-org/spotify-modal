@@ -5,7 +5,7 @@ const playerStore = require('../playerStore/store');
 const ShareModal = require('../components/ShareModal');
 
 module.exports = {
-  command: 'share',
+  command: 'share_song',
   description: 'Send specified or current playing song to selected channel',
   usage: '{c} {song name/artist}',
   category: 'Spotify',
