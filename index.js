@@ -46,7 +46,7 @@ class Spotify extends Plugin {
     playerStoreActions.fetchDevices()
       .catch((e) => this.error('Failed to fetch devices', e));
 
-    powercord.api.settings.registerSettings('pc-spotify', {
+    powercord.api.settings.registerSettings('spotify', {
       category: this.entityID,
       label: 'Spotify',
       render: (props) =>
@@ -60,12 +60,12 @@ class Spotify extends Plugin {
   }
 
   pluginWillUnload () {
-    uninject('pc-spotify-socket');
-    uninject('pc-spotify-modal');
+    uninject('spotify-socket');
+    uninject('spotify-modal');
     // this._applySocketChanges();
     this._patchAutoPause(true);
     Object.values(commands).forEach(cmd => powercord.api.commands.unregisterCommand(cmd.command));
-    powercord.api.settings.unregisterSettings('pc-spotify');
+    powercord.api.settings.unregisterSettings('spotify');
     spotifySocket.getActiveSocketAndDevice()?.socket.socket.close();
     songsStoreActions.purgeSongs();
 
@@ -77,7 +77,7 @@ class Spotify extends Plugin {
 
   async _injectSocket () {
     const { SpotifySocket } = await getModule([ 'SpotifySocket' ]);
-    inject('pc-spotify-socket', SpotifySocket.prototype, 'handleMessage', ([ e ]) => this._handleSpotifyMessage(e));
+    inject('spotify-socket', SpotifySocket.prototype, 'handleMessage', ([ e ]) => this._handleSpotifyMessage(e));
     spotifySocket.getActiveSocketAndDevice()?.socket.socket.close();
   }
 
@@ -86,7 +86,7 @@ class Spotify extends Plugin {
     const { container } = await getModule([ 'container', 'usernameContainer' ]);
     const accountContainer = await waitFor(`section > .${container}`);
     const instance = getOwnerInstance(accountContainer);
-    await inject('pc-spotify-modal', instance.__proto__, 'render', (_, res) => {
+    await inject('spotify-modal', instance.__proto__, 'render', (_, res) => {
       const realRes = findInTree(res, t => t.props && t.props.className === container);
       return [
         React.createElement(Modal, {
